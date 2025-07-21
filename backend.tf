@@ -3,6 +3,6 @@ terraform {
     bucket  = "my-codepipeline-bucket-254"
     key     = "state/terraform.tfstate"
     region  = "ap-south-1"
-    encrypt = true # changes done
+    encrypt = true # changed
   }
 } 
