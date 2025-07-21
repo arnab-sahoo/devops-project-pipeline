@@ -31,7 +31,7 @@ variable "security_group_ids" {
 variable "instance_profile_name" { 
   description = "IAM Instance profile name for EC2" 
   type        = string 
-  default     = "devops-project-ec2-profile1" 
+  default     = "devops-project-ec2-profile2" 
 } 
  
 variable "instance_name_tag" { 
