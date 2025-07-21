@@ -74,7 +74,6 @@ jobs:
           exit-code: 0
           ignore-unfixed: true
 
-
   deploy:
     runs-on: ubuntu-latest
     needs: [terraform, tfsec, trivy] # ensures terraform, tfsec, trivy & seales-secrets jobs complete before deployment.
@@ -117,12 +116,26 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          echo "Deploying application on EC2 instance"
-            sudo yum install -y unzip aws-cli
-            aws s3 cp s3://${{ secrets.S3_BUCKET }}/vite-app.zip /home/${{ secrets.EC2_USER }}/vite-app.zip
-            unzip -o /home/${{ secrets.EC2_USER }}/vite-app.zip -d /home/${{ secrets.EC2_USER }}/vite-app
-            sudo rm -rf /usr/share/nginx/html/*
-            sudo cp -r /home/${{ secrets.EC2_USER }}/vite-app/* /usr/share/nginx/html/
-            sudo systemctl restart nginx
-          EOF
+           ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+           echo "Deploying application on EC2 instance"
+
+           # Install unzip, AWS CLI, and nginx
+           sudo yum install -y unzip aws-cli nginx
+
+           # Ensure nginx directory exists
+           sudo mkdir -p /usr/share/nginx/html
+
+           # Download and extract app
+           aws s3 cp s3://${{ secrets.S3_BUCKET }}/vite-app.zip /home/${{ secrets.EC2_USER }}/vite-app.zip
+           unzip -o /home/${{ secrets.EC2_USER }}/vite-app.zip -d /home/${{ secrets.EC2_USER }}/vite-app
+
+           # Copy to nginx HTML directory
+           sudo rm -rf /usr/share/nginx/html/*
+           sudo cp -r /home/${{ secrets.EC2_USER }}/vite-app/* /usr/share/nginx/html/
+
+           # Enable and restart nginx
+           sudo systemctl enable nginx
+           sudo systemctl restart nginx
+
+           echo "✅ Deployment finished"
+           EOF
