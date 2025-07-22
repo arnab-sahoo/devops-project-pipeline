@@ -36,7 +36,7 @@ resource "aws_iam_role_policy" "codebuild_kms_decrypt" {
       Action = [
         "kms:Decrypt"
       ],
-      Resource = "arn:aws:kms:ap-south-1:247518864403:key/46f063c3-6db9-4333-957b-70df74e68d55" # You can restrict this to specific KMS key ARN
+      Resource = "arn:aws:kms:ap-south-1:247518864403:key/b3876fe5-d95c-4b32-87e9-3bea3d38b7a8" # You can restrict this to specific KMS key ARN
     }]
   })
 }
@@ -80,7 +80,7 @@ resource "aws_iam_role_policy" "codepipeline_kms_decrypt" {
       Action = [
         "kms:Decrypt"
       ],
-      Resource = "arn:aws:kms:ap-south-1:247518864403:key/46f063c3-6db9-4333-957b-70df74e68d55"
+      Resource = "arn:aws:kms:ap-south-1:247518864403:key/b3876fe5-d95c-4b32-87e9-3bea3d38b7a8"
     }]
   })
 }
@@ -135,7 +135,7 @@ resource "aws_iam_role_policy" "ec2_kms_decrypt" {
         "s3:GetObject",
         "kms:Decrypt"
       ],
-      Resource = "arn:aws:kms:ap-south-1:247518864403:key/46f063c3-6db9-4333-957b-70df74e68d55"
+      Resource = "arn:aws:kms:ap-south-1:247518864403:key/b3876fe5-d95c-4b32-87e9-3bea3d38b7a8"
     }]
   })
 }
