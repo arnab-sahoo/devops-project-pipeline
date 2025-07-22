@@ -75,6 +75,7 @@ jobs:
           ignore-unfixed: true
 
   deploy:
+    name: Sealed Secrets and Deploy
     runs-on: ubuntu-latest
     needs: [terraform, tfsec, trivy] # ensures terraform, tfsec, trivy & seales-secrets jobs complete before deployment.
 
